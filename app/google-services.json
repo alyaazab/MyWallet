@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "361473430628",
+    "firebase_url": "https://mywallet2-fcb4d.firebaseio.com",
+    "project_id": "mywallet2-fcb4d",
+    "storage_bucket": "mywallet2-fcb4d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:361473430628:android:2f6474a77a6ab205",
+        "android_client_info": {
+          "package_name": "com.example.android.mywallet2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "361473430628-6isjg3mm37msn3cq6tkmnfq0hba9u2h4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA6akNl6dg8doj_h8OuXE8V6G4Av0Jsa4s"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -77,6 +77,7 @@ public class ExpenseFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
+
             }
         });
 

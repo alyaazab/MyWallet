@@ -1,6 +1,5 @@
 package com.example.android.mywallet2.model;
 
-import com.example.android.mywallet2.model.categories.Category;
 import com.example.android.mywallet2.model.period.Period;
 
 public class Budget {

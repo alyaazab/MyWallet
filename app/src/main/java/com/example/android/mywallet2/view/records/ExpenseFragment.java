@@ -4,7 +4,6 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,15 +13,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.example.android.mywallet2.R;
-import com.example.android.mywallet2.model.categories.Category;
-import com.example.android.mywallet2.model.categories.Food;
-import com.example.android.mywallet2.model.categories.Groceries;
-import com.example.android.mywallet2.model.categories.Health;
-import com.example.android.mywallet2.model.categories.Pets;
-import com.example.android.mywallet2.model.categories.Shopping;
-import com.example.android.mywallet2.model.categories.Transportation;
-import com.example.android.mywallet2.model.categories.Utilities;
-import com.example.android.mywallet2.model.categories.Vehicle;
+import com.example.android.mywallet2.model.Category;
 import com.example.android.mywallet2.model.record.ExpenseRecord;
 import com.example.android.mywallet2.model.record.Record;
 import com.example.android.mywallet2.viewmodel.RecordViewModel;
@@ -126,28 +117,28 @@ public class ExpenseFragment extends Fragment {
 
         switch(selectedCategory){
             case "Food":
-                category = new Food();
+                category = new Category(null, "Food");
                 break;
             case "Groceries":
-                category = new Groceries();
+                category = new Category(null, "Groceries");
                 break;
             case "Health":
-                category = new Health();
+                category = new Category(null, "Health");
                 break;
             case "Pets":
-                category = new Pets();
+                category = new Category(null, "Pets");
                 break;
             case "Shopping":
-                category = new Shopping();
+                category = new Category(null, "Shopping");
                 break;
             case "Transportation":
-                category = new Transportation();
+                category = new Category(null, "Transportation");
                 break;
             case "Utilities":
-                category = new Utilities();
+                category = new Category(null, "Utilities");
                 break;
             case "Vehicle":
-                category = new Vehicle();
+                category = new Category(null, "Vehicle");
                 break;
             default:
                 category = null;

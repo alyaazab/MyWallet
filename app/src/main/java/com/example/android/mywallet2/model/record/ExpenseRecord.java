@@ -1,6 +1,6 @@
 package com.example.android.mywallet2.model.record;
 
-import com.example.android.mywallet2.model.categories.Category;
+import com.example.android.mywallet2.model.Category;
 
 import java.util.Date;
 

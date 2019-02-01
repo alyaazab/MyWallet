@@ -1,8 +1,11 @@
 package com.example.android.mywallet2.view.records;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,23 +19,20 @@ import com.example.android.mywallet2.R;
 import com.example.android.mywallet2.model.Category;
 import com.example.android.mywallet2.model.record.ExpenseRecord;
 import com.example.android.mywallet2.model.record.Record;
+import com.example.android.mywallet2.viewmodel.CategoriesViewModel;
 import com.example.android.mywallet2.viewmodel.RecordViewModel;
 
 import java.util.Date;
+import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link ExpenseFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link ExpenseFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class ExpenseFragment extends Fragment {
 
     private Button btnSaveExpense;
     private EditText editTextAmount, editTextPayee, editTextDate, editTextTime, editTextNote;
     private Spinner spinnerExpenseCategory;
+
+    private List<Category> categoriesList;
+    private CategoriesViewModel viewModel;
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -50,15 +50,6 @@ public class ExpenseFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ExpenseFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static ExpenseFragment newInstance(String param1, String param2) {
         ExpenseFragment fragment = new ExpenseFragment();
         Bundle args = new Bundle();
@@ -113,47 +104,32 @@ public class ExpenseFragment extends Fragment {
         String note = editTextNote.getText().toString();
 
         String selectedCategory = spinnerExpenseCategory.getSelectedItem().toString();
-        Category category;
+        Category category = new Category(null, selectedCategory);
 
-        switch(selectedCategory){
-            case "Food":
-                category = new Category(null, "Food");
-                break;
-            case "Groceries":
-                category = new Category(null, "Groceries");
-                break;
-            case "Health":
-                category = new Category(null, "Health");
-                break;
-            case "Pets":
-                category = new Category(null, "Pets");
-                break;
-            case "Shopping":
-                category = new Category(null, "Shopping");
-                break;
-            case "Transportation":
-                category = new Category(null, "Transportation");
-                break;
-            case "Utilities":
-                category = new Category(null, "Utilities");
-                break;
-            case "Vehicle":
-                category = new Category(null, "Vehicle");
-                break;
-            default:
-                category = null;
-        }
 
         Record record = new ExpenseRecord(amount, null, note, new Date(date), payee, category);
         return record;
     }
 
     private void populateSpinner() {
-        String[] items = new String[]{"Food", "Groceries", "Health", "Pets", "Shopping",
-                "Transportation", "Utilities", "Vehicle"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this.getContext(),
-                android.R.layout.simple_spinner_dropdown_item, items);
-        spinnerExpenseCategory.setAdapter(adapter);
+        viewModel = ViewModelProviders.of(this).get(CategoriesViewModel.class);
+        viewModel.getCategories().observe(this, new Observer<List<Category>>() {
+            @Override
+            public void onChanged(@Nullable List<Category> categories) {
+                categoriesList = categories;
+                String[] items = new String[categoriesList.size()];
+
+                for(int i = 0; i < items.length; i++){
+                    items[i] = categoriesList.get(i).getType();
+                }
+
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),
+                        android.R.layout.simple_spinner_dropdown_item, items);
+                spinnerExpenseCategory.setAdapter(adapter);
+            }
+        });
+
+
     }
 
 
@@ -181,12 +157,6 @@ public class ExpenseFragment extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);

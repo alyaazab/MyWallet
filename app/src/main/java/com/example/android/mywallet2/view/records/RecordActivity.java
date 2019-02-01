@@ -24,8 +24,8 @@ import android.widget.TextView;
 import com.example.android.mywallet2.R;
 
 public class RecordActivity extends AppCompatActivity implements
-        IncomeFragment.OnFragmentInteractionListener, ExpenseFragment.OnFragmentInteractionListener {
-
+        IncomeFragment.OnFragmentInteractionListener,
+        ExpenseFragment.OnFragmentInteractionListener {
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
 

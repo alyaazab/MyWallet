@@ -92,8 +92,6 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 });
-
-
     }
 
     public void goToSignInPage(View view) {

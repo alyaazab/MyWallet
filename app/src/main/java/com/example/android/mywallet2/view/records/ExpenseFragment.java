@@ -100,27 +100,27 @@ public class ExpenseFragment extends Fragment {
         editTextNote = rootView.findViewById(R.id.editTextExpenseNote);
         btnSaveExpense = rootView.findViewById(R.id.buttonSaveExpense);
 
-
         populateSpinner();
 
         btnSaveExpense.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 Record record = createNewRecord();
                 RecordViewModel recordViewModel = new RecordViewModel();
                 recordViewModel.addNewRecord(record);
-
             }
         });
-
-
 
         return rootView;
     }
 
     private Record createNewRecord(){
         double amount = Double.valueOf(editTextAmount.getText().toString());
+        String payee = editTextPayee.getText().toString();
+        String date = editTextDate.getText().toString();
+        String time = editTextTime.getText().toString();
+        String note = editTextNote.getText().toString();
+
         String selectedCategory = spinnerExpenseCategory.getSelectedItem().toString();
         Category category;
 
@@ -152,11 +152,6 @@ public class ExpenseFragment extends Fragment {
             default:
                 category = null;
         }
-
-        String payee = editTextPayee.getText().toString();
-        String date = editTextDate.getText().toString();
-        String time = editTextTime.getText().toString();
-        String note = editTextNote.getText().toString();
 
         Record record = new ExpenseRecord(amount, null, note, new Date(date), payee, category);
         return record;

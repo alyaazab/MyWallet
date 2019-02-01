@@ -6,9 +6,9 @@ public class RecordViewModel {
 
     private RecordDataManager recordDataManager;
 
-    public void addNewRecord(String info){
+    public void addNewRecord(double amount, String info){
         recordDataManager = new RecordDataManager();
-        recordDataManager.addRecordToDatabase(info);
+        recordDataManager.addRecordToDatabase(amount, info);
 
     }
 }

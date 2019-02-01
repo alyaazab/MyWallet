@@ -9,7 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.ProfileActivity"></activity>
+        <activity android:name=".view.RecordActivity"></activity>
+        <activity
+            android:name=".view.ProfileActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".view.SignInActivity" />
         <activity android:name=".view.MainActivity">
             <intent-filter>

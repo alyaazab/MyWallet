@@ -18,7 +18,15 @@ public class Information {
 
     // TODO: another objects here (record...etc)
 
-    private ArrayList<Record> recordList;
+    public void setRecordList(ArrayList<Record> recordList) {
+        this.recordList = recordList;
+    }
+
+    public ArrayList<Record> getRecordList() {
+        return recordList;
+    }
+
+    private ArrayList<Record> recordList = new ArrayList<>();
 
     public Information(ArrayList<Record> recordList) {
         this.recordList = recordList;

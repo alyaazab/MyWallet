@@ -17,6 +17,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -82,9 +83,9 @@ public class MainActivity extends AppCompatActivity {
                             finish();
                             startActivity(new Intent(getApplicationContext(),
                                     ProfileActivity.class));
-                            DatabaseReference db = FirebaseDatabase.getInstance().getReference()
-                                    .child("users");
-                            db.push().setValue(user);
+                            FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+                            DatabaseReference db = FirebaseDatabase.getInstance().getReference();
+                            db.child("users").child(firebaseUser.getUid()).setValue(user);
                         } else {
                             Toast.makeText(MainActivity.this, "Could not register user," +
                                             " please try again",

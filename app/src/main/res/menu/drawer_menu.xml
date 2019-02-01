@@ -25,4 +25,10 @@
         android:icon="@drawable/ic_debts"/>
     </group>
 
+    <item android:title="More">
+        <menu>
+            <item android:title="Logout"
+                android:id="@+id/logout"/>
+        </menu>
+    </item>
 </menu>

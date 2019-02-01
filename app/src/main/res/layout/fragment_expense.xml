@@ -18,23 +18,24 @@
             app:layout_constraintLeft_toLeftOf="parent"
             android:hint="Enter amount"
             android:inputType="numberDecimal"
-            android:id="@+id/editTextAmount"/>
+            android:id="@+id/editTextExpenseAmount"/>
+
+        <Spinner
+            android:id="@+id/spinnerExpenseCategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:drawable/btn_dropdown"
+            android:spinnerMode="dropdown"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editTextExpenseAmount" />
+
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/editTextAmount"
-            android:hint="Enter category"
-            android:inputType="text"
-            android:id="@+id/editTextCategory"/>
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/editTextCategory"
-            android:id="@+id/editTextPayee"
+            app:layout_constraintTop_toBottomOf="@id/spinnerExpenseCategory"
+            android:id="@+id/editTextExpensePayee"
             android:hint="Payee" />
 
 
@@ -42,27 +43,27 @@
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/editTextPayee"
+            app:layout_constraintTop_toBottomOf="@id/editTextExpensePayee"
             android:hint="Date"
             android:inputType="date"
-            android:id="@+id/editTextDate"/>
+            android:id="@+id/editTextExpenseDate"/>
 
 
         <EditText
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            app:layout_constraintLeft_toRightOf="@id/editTextDate"
-            app:layout_constraintTop_toBottomOf="@id/editTextPayee"
+            app:layout_constraintLeft_toRightOf="@id/editTextExpenseDate"
+            app:layout_constraintTop_toBottomOf="@id/editTextExpensePayee"
             android:hint="Time"
             android:inputType="time"
-            android:id="@+id/editTextTime"/>
+            android:id="@+id/editTextExpenseTime"/>
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/editTextDate"
-            android:id="@+id/editTextNote"
+            app:layout_constraintTop_toBottomOf="@id/editTextExpenseDate"
+            android:id="@+id/editTextExpenseNote"
             android:hint="Note" />
 
 
@@ -70,7 +71,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/editTextNote"
+            app:layout_constraintTop_toBottomOf="@id/editTextExpenseNote"
             app:layout_constraintLeft_toLeftOf="parent"
             android:text="SAVE"
             android:id="@+id/buttonSaveExpense"/>

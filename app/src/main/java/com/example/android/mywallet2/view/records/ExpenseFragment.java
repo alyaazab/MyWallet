@@ -8,9 +8,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
 
 import com.example.android.mywallet2.R;
+import com.example.android.mywallet2.model.categories.Category;
+import com.example.android.mywallet2.model.record.ExpenseRecord;
+import com.example.android.mywallet2.model.record.Record;
+import com.example.android.mywallet2.viewmodel.RecordViewModel;
+
+import java.util.Date;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,6 +32,8 @@ import com.example.android.mywallet2.R;
 public class ExpenseFragment extends Fragment {
 
     private Button btnSaveExpense;
+    private EditText editTextAmount, editTextPayee, editTextDate, editTextTime, editTextNote;
+    private Spinner spinnerExpenseCategory;
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -72,10 +83,38 @@ public class ExpenseFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_expense, container, false);
-        btnSaveExpense = getActivity().findViewById(R.id.buttonSaveExpense);
+
+        editTextAmount = rootView.findViewById(R.id.editTextExpenseAmount);
+        spinnerExpenseCategory = rootView.findViewById(R.id.spinnerExpenseCategory);
+        editTextPayee = rootView.findViewById(R.id.editTextExpensePayee);
+        editTextDate = rootView.findViewById(R.id.editTextExpenseDate);
+        editTextTime = rootView.findViewById(R.id.editTextExpenseTime);
+        editTextNote = rootView.findViewById(R.id.editTextExpenseNote);
+
+        btnSaveExpense = rootView.findViewById(R.id.buttonSaveExpense);
+
+
+        String[] items = new String[]{"Food", "Groceries", "Health", "Pets", "Shopping", "Transportation", "Utilities", "Vehicle"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this.getContext(), android.R.layout.simple_spinner_dropdown_item, items);
+        spinnerExpenseCategory.setAdapter(adapter);
+
+
+
         btnSaveExpense.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                double amount = Double.valueOf(editTextAmount.getText().toString());
+                Category category = spinnerExpenseCategory.getSelectedItem();
+                String payee = editTextPayee.getText().toString();
+                String date = editTextDate.getText().toString();
+                String time = editTextTime.getText().toString();
+                String note = editTextNote.getText().toString();
+
+                Record record = new ExpenseRecord(amount, null, note, new Date(date), payee, category);
+
+                RecordViewModel recordViewModel = new RecordViewModel();
+                recordViewModel.addNewRecord(record);
+
 
 
             }

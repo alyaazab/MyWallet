@@ -15,6 +15,14 @@ import android.widget.Spinner;
 
 import com.example.android.mywallet2.R;
 import com.example.android.mywallet2.model.categories.Category;
+import com.example.android.mywallet2.model.categories.Food;
+import com.example.android.mywallet2.model.categories.Groceries;
+import com.example.android.mywallet2.model.categories.Health;
+import com.example.android.mywallet2.model.categories.Pets;
+import com.example.android.mywallet2.model.categories.Shopping;
+import com.example.android.mywallet2.model.categories.Transportation;
+import com.example.android.mywallet2.model.categories.Utilities;
+import com.example.android.mywallet2.model.categories.Vehicle;
 import com.example.android.mywallet2.model.record.ExpenseRecord;
 import com.example.android.mywallet2.model.record.Record;
 import com.example.android.mywallet2.viewmodel.RecordViewModel;
@@ -90,32 +98,18 @@ public class ExpenseFragment extends Fragment {
         editTextDate = rootView.findViewById(R.id.editTextExpenseDate);
         editTextTime = rootView.findViewById(R.id.editTextExpenseTime);
         editTextNote = rootView.findViewById(R.id.editTextExpenseNote);
-
         btnSaveExpense = rootView.findViewById(R.id.buttonSaveExpense);
 
 
-        String[] items = new String[]{"Food", "Groceries", "Health", "Pets", "Shopping", "Transportation", "Utilities", "Vehicle"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this.getContext(), android.R.layout.simple_spinner_dropdown_item, items);
-        spinnerExpenseCategory.setAdapter(adapter);
-
-
+        populateSpinner();
 
         btnSaveExpense.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                double amount = Double.valueOf(editTextAmount.getText().toString());
-                Category category = spinnerExpenseCategory.getSelectedItem();
-                String payee = editTextPayee.getText().toString();
-                String date = editTextDate.getText().toString();
-                String time = editTextTime.getText().toString();
-                String note = editTextNote.getText().toString();
 
-                Record record = new ExpenseRecord(amount, null, note, new Date(date), payee, category);
-
+                Record record = createNewRecord();
                 RecordViewModel recordViewModel = new RecordViewModel();
                 recordViewModel.addNewRecord(record);
-
-
 
             }
         });
@@ -124,6 +118,58 @@ public class ExpenseFragment extends Fragment {
 
         return rootView;
     }
+
+    private Record createNewRecord(){
+        double amount = Double.valueOf(editTextAmount.getText().toString());
+        String selectedCategory = spinnerExpenseCategory.getSelectedItem().toString();
+        Category category;
+
+        switch(selectedCategory){
+            case "Food":
+                category = new Food();
+                break;
+            case "Groceries":
+                category = new Groceries();
+                break;
+            case "Health":
+                category = new Health();
+                break;
+            case "Pets":
+                category = new Pets();
+                break;
+            case "Shopping":
+                category = new Shopping();
+                break;
+            case "Transportation":
+                category = new Transportation();
+                break;
+            case "Utilities":
+                category = new Utilities();
+                break;
+            case "Vehicle":
+                category = new Vehicle();
+                break;
+            default:
+                category = null;
+        }
+
+        String payee = editTextPayee.getText().toString();
+        String date = editTextDate.getText().toString();
+        String time = editTextTime.getText().toString();
+        String note = editTextNote.getText().toString();
+
+        Record record = new ExpenseRecord(amount, null, note, new Date(date), payee, category);
+        return record;
+    }
+
+    private void populateSpinner() {
+        String[] items = new String[]{"Food", "Groceries", "Health", "Pets", "Shopping",
+                "Transportation", "Utilities", "Vehicle"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this.getContext(),
+                android.R.layout.simple_spinner_dropdown_item, items);
+        spinnerExpenseCategory.setAdapter(adapter);
+    }
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {

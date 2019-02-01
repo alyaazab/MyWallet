@@ -3,13 +3,81 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".view.records.ExpenseFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:id="@+id/section_label"
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="expense" />
+        android:layout_height="match_parent">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:hint="Enter amount"
+            android:inputType="numberDecimal"
+            android:id="@+id/editTextAmount"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editTextAmount"
+            android:hint="Enter category"
+            android:inputType="text"
+            android:id="@+id/editTextCategory"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editTextCategory"
+            android:id="@+id/editTextPayee"
+            android:hint="Payee" />
+
+
+        <EditText
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editTextPayee"
+            android:hint="Date"
+            android:inputType="date"
+            android:id="@+id/editTextDate"/>
+
+
+        <EditText
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toRightOf="@id/editTextDate"
+            app:layout_constraintTop_toBottomOf="@id/editTextPayee"
+            android:hint="Time"
+            android:inputType="time"
+            android:id="@+id/editTextTime"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editTextDate"
+            android:id="@+id/editTextNote"
+            android:hint="Note" />
+
+
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/editTextNote"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:text="SAVE"
+            android:id="@+id/buttonSaveExpense"/>
+
+
+
+    </android.support.constraint.ConstraintLayout>
+
 
 </FrameLayout>

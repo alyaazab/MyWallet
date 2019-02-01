@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".view.RecordActivity"
+            android:name=".view.records.RecordActivity"
             android:label="@string/title_activity_record"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity

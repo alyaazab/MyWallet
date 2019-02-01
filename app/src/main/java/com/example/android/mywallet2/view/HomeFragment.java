@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.android.mywallet2.R;
+import com.example.android.mywallet2.view.records.RecordActivity;
 import com.example.android.mywallet2.viewmodel.RecordViewModel;
 
 public class HomeFragment extends Fragment {

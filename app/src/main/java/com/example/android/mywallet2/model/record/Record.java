@@ -1,13 +1,15 @@
 package com.example.android.mywallet2.model.record;
 
+import com.example.android.mywallet2.model.categories.Category;
+
 import java.util.Date;
 
 public abstract class Record {
 
-    public double amount;
+    private double amount;
     String image;
-    public String note;
-    public Date date;
+    private String note;
+    private Date date;
 
     public Record(double amount, String image, String note, Date date) {
         this.amount = amount;

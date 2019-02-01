@@ -10,4 +10,12 @@ public class IncomeRecord extends Record {
         super(amount, image, note, date);
         this.sourceOfPayment = sourceOfPayment;
     }
+
+    public String getSourceOfPayment() {
+        return sourceOfPayment;
+    }
+
+    public void setSourceOfPayment(String sourceOfPayment) {
+        this.sourceOfPayment = sourceOfPayment;
+    }
 }

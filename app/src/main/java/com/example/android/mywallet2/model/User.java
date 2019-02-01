@@ -1,17 +1,19 @@
 package com.example.android.mywallet2.model;
 
 public class User {
-    private String firstName, lastName, email;
+    private static final User ourInstance = new User();
+
+    public static User getInstance() {
+        return ourInstance;
+    }
+
+    private User() {
+    }
+
+    private String firstName, lastName, email, password;
     private Information information;
 
     // TODO: list of Records here and its getter. (maybe also a method to add into the list, idk.)
-
-    public User(String firstName, String lastName, String email, Information information) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.information = information;
-    }
 
     public String getFirstName() {
         return firstName;
@@ -37,6 +39,14 @@ public class User {
         this.email = email;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public Information getInformation() {
         return information;
     }
@@ -44,5 +54,4 @@ public class User {
     public void setInformation(Information information) {
         this.information = information;
     }
-
 }

@@ -14,4 +14,20 @@ public class ExpenseRecord extends Record {
         this.payee = payee;
         this.category = category;
     }
+
+    public String getPayee() {
+        return payee;
+    }
+
+    public void setPayee(String payee) {
+        this.payee = payee;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
 }

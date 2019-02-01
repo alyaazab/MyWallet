@@ -24,19 +24,6 @@ public class PlannedPaymentsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_planned_payments, container, false);
 
-        buttonAddPlannedPayment = rootView.findViewById(R.id.buttonAddRecord);
-
-        buttonAddPlannedPayment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.e("Prof Activity", "pp");
-
-
-
-            }
-        }
-        );
-
         return rootView;
 
     }

@@ -12,16 +12,20 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.android.mywallet2.R;
+import com.example.android.mywallet2.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 
 public class MainActivity extends AppCompatActivity {
 
     private ProgressDialog progressDialog;
     private FirebaseAuth firebaseAuth;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         progressDialog = new ProgressDialog(this);
 //        FirebaseApp.initializeApp(this);
         firebaseAuth = FirebaseAuth.getInstance();
-        if(firebaseAuth.getCurrentUser()!=null){
+        if (firebaseAuth.getCurrentUser() != null) {
             //start profile activity
             finish();
             startActivity(new Intent(this, ProfileActivity.class));
@@ -47,35 +51,44 @@ public class MainActivity extends AppCompatActivity {
         String password = editTextPassword.getText().toString().trim();
 
         //if email or password is empty, display appropriate message and return
-        if(email.isEmpty()) {
+        if (email.isEmpty()) {
             editTextEmail.startAnimation(shakeError());
             Toast.makeText(this, "Please enter your email", Toast.LENGTH_SHORT).show();
             return;
         }
-        if(password.isEmpty()){
+        if (password.isEmpty()) {
             editTextPassword.startAnimation(shakeError());
             Toast.makeText(this, "Please enter your password", Toast.LENGTH_SHORT).show();
             return;
         }
+        user = User.getInstance();
+        user.setEmail(email);
+        user.setPassword(password);
 
         //if we reach this part, email and password are valid
         progressDialog.setMessage("Registering User...");
         progressDialog.show();
 
-        firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this,
-                new OnCompleteListener<AuthResult>() {
+        firebaseAuth.createUserWithEmailAndPassword(email, password).
+                addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         progressDialog.dismiss();
 
-                        if(task.isSuccessful()){
-                            Toast.makeText(MainActivity.this, "User Registered Successfully", Toast.LENGTH_SHORT).show();
+                        if (task.isSuccessful()) {
+                            Toast.makeText(MainActivity.this,
+                                    "User Registered Successfully", Toast.LENGTH_SHORT).show();
                             //start to profile activity
                             finish();
-                            startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
-                        }
-                        else{
-                            Toast.makeText(MainActivity.this, "Could not register user, please try again", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(getApplicationContext(),
+                                    ProfileActivity.class));
+                            DatabaseReference db = FirebaseDatabase.getInstance().getReference()
+                                    .child("users");
+                            db.push().setValue(user);
+                        } else {
+                            Toast.makeText(MainActivity.this, "Could not register user," +
+                                            " please try again",
+                                    Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -89,7 +102,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public TranslateAnimation shakeError() {
-        TranslateAnimation shake = new TranslateAnimation(0, 10, 0, 0);
+        TranslateAnimation shake = new TranslateAnimation(0, 10,
+                0, 0);
         shake.setDuration(500);
         shake.setInterpolator(new CycleInterpolator(7));
         return shake;

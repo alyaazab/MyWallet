@@ -26,19 +26,6 @@ public class DebtsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_debts, container, false);
 
-        buttonAddDebt = rootView.findViewById(R.id.buttonAddRecord);
-
-        buttonAddDebt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.e("Prof Activity", "debt");
-
-
-
-            }
-        }
-        );
-
         return rootView;
     }
 

@@ -25,14 +25,12 @@ public class BudgetsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_budgets, container, false);
 
-        buttonAddBudget = rootView.findViewById(R.id.buttonAddRecord);
+        buttonAddBudget = rootView.findViewById(R.id.buttonAddBudget);
 
         buttonAddBudget.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.e("Prof Activity", "budget");
-
-
 
             }
         }

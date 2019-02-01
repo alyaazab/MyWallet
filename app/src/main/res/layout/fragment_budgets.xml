@@ -22,7 +22,6 @@
         android:layout_margin="16dp"
         android:id="@+id/buttonAddBudget"
         android:src="@drawable/ic_plus"
-        android:onClick="onClickNewBudget"
         android:elevation="4dp"/>
 
 </android.support.constraint.ConstraintLayout>

@@ -25,18 +25,7 @@ public class GoalsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_goals, container, false);
 
-        buttonAddGoal = rootView.findViewById(R.id.buttonAddRecord);
 
-        buttonAddGoal.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.e("Prof Activity", "goals");
-
-
-
-            }
-        }
-        );
 
         return rootView;
     }

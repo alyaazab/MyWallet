@@ -1,30 +1,56 @@
 package com.example.android.mywallet2.view.records;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TimePicker;
 
 import com.example.android.mywallet2.R;
+import com.example.android.mywallet2.model.Category;
+import com.example.android.mywallet2.model.Date;
+import com.example.android.mywallet2.model.record.ExpenseRecord;
+import com.example.android.mywallet2.model.record.IncomeRecord;
+import com.example.android.mywallet2.model.record.Record;
+import com.example.android.mywallet2.viewmodel.CategoriesViewModel;
+import com.example.android.mywallet2.viewmodel.RecordViewModel;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link IncomeFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link IncomeFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.Calendar;
+import java.util.List;
+
 public class IncomeFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+
+
+    private Button btnSaveIncome;
+    private EditText editTextAmount, editTextDate, editTextTime, editTextNote,
+            editTextSourceOfPayment;
+    private Button btnIncomeDate;
+    private Button btnIncomeTime;
+
+    private Date date;
+
+
+    private Calendar calendar;
+    private DatePickerDialog datePickerDialog;
+    private TimePickerDialog timePickerDialog;
+
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
@@ -34,15 +60,6 @@ public class IncomeFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment IncomeFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static IncomeFragment newInstance(String param1, String param2) {
         IncomeFragment fragment = new IncomeFragment();
         Bundle args = new Bundle();
@@ -64,11 +81,106 @@ public class IncomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_income, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_income, container, false);
+        findViews(rootView);
+        getDate();
+
+        btnSaveIncome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Record record = createNewRecord();
+                RecordViewModel recordViewModel = new RecordViewModel();
+                recordViewModel.addNewRecord(record);
+            }
+        });
+
+
+        return rootView;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
+
+    private void getDate() {
+        //get current date
+        calendar = Calendar.getInstance();
+        final int day = calendar.get(Calendar.DAY_OF_MONTH);
+        final int month = calendar.get(Calendar.MONTH);
+        final int year = calendar.get(Calendar.YEAR);
+
+        btnIncomeDate.setText(day + "/" + (month+1) + "/" + year);
+
+        //get current time
+        java.util.Date time = new java.util.Date();
+        long second = time.getTime() / 1000;
+        long hours = second / 3600;
+        long minute = (time.getTime() - hours*3600000) / 60000;
+        long hour = hours - 430318;
+        final int intSecond = (int) second;
+        final int intHour = (int) hour;
+        final int intMinute = (int) minute;
+
+        //set date as current date and time
+        date = new Date(intSecond, intMinute, intHour, day, month, year);
+
+        //display current time
+        String str = String.format("%02d:%02d", hour, minute);
+        btnIncomeTime.setText(str);
+
+
+        btnIncomeTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                timePickerDialog = new TimePickerDialog(getContext(), new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                        String str = String.format("%02d:%02d", selectedHour, selectedMinute);
+                        btnIncomeTime.setText(str);
+                        date.setHour(selectedHour);
+                        date.setMinute(selectedMinute);
+                    }
+                }, intHour, intMinute, true);
+                timePickerDialog.show();
+            }
+        });
+
+        btnIncomeDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                datePickerDialog = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int selectedYear, int selectedMonth, int selectedDay) {
+                        btnIncomeDate.setText(selectedDay + "/" + (selectedMonth+1) + "/" + selectedYear);
+                        date.setYear(selectedYear);
+                        date.setMonth(selectedMonth);
+                        date.setDay(selectedDay);
+                    }
+                }, year, month, day);
+                datePickerDialog.show();
+            }
+        });
+
+    }
+
+    private void findViews(View rootView) {
+        btnSaveIncome = rootView.findViewById(R.id.buttonSaveIncome);
+        btnIncomeDate = rootView.findViewById(R.id.buttonIncomeDate);
+        btnIncomeTime = rootView.findViewById(R.id.buttonIncomeTime);
+        editTextNote = rootView.findViewById(R.id.editTextIncomeNote);
+        editTextAmount = rootView.findViewById(R.id.editTextIncomeAmount);
+        editTextSourceOfPayment = rootView.findViewById(R.id.editTextIncomeSource);
+    }
+
+
+    private Record createNewRecord(){
+        double amount = Double.valueOf(editTextAmount.getText().toString());
+        String note = editTextNote.getText().toString();
+        String source = editTextSourceOfPayment.getText().toString();
+
+        Record record = new IncomeRecord(amount, null, note, date, source);
+        return record;
+    }
+
+
+
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
@@ -92,16 +204,6 @@ public class IncomeFragment extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);

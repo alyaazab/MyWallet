@@ -1,10 +1,7 @@
 package com.example.android.mywallet2.datamanagers;
 
-import android.icu.text.IDNA;
-
 import com.example.android.mywallet2.model.Information;
 import com.example.android.mywallet2.model.User;
-import com.example.android.mywallet2.model.record.DummyRecord;
 import com.example.android.mywallet2.model.record.Record;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;

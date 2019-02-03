@@ -3,6 +3,7 @@ package com.example.android.mywallet2.datamanagers;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.example.android.mywallet2.model.Category;
 import com.google.firebase.database.DataSnapshot;
@@ -38,6 +39,9 @@ public class CategoriesDataManager {
                     temp.add(category);
                 }
                 categoriesLiveData.setValue(temp);
+
+//                if(dataSnapshot.hasChild("cat1"))
+//                    Log.e("YES BITCH", "IT WORKS");
             }
 
             @Override

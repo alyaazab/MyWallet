@@ -22,6 +22,7 @@ public class CategoriesViewModel extends ViewModel {
     public LiveData<List<Category>> getCategories(){
         if(categoriesLiveData.getValue() == null){
             CategoriesDataManager dataManager = new CategoriesDataManager();
+
             categoriesLiveData.addSource(dataManager.getCategoriesFromDatabase(),
                     new Observer<List<Category>>() {
                 @Override

@@ -6,7 +6,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".view.records.ExpenseFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -39,30 +38,28 @@
             android:hint="Payee" />
 
 
-        <EditText
+        <Button
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@id/editTextExpensePayee"
-            android:hint="Date"
-            android:inputType="date"
-            android:id="@+id/editTextExpenseDate"/>
+            android:text="Date"
+            android:id="@+id/buttonExpenseDate"/>
 
 
-        <EditText
+        <Button
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            app:layout_constraintLeft_toRightOf="@id/editTextExpenseDate"
+            app:layout_constraintLeft_toRightOf="@id/buttonExpenseDate"
             app:layout_constraintTop_toBottomOf="@id/editTextExpensePayee"
-            android:hint="Time"
-            android:inputType="time"
-            android:id="@+id/editTextExpenseTime"/>
+            android:text="Time"
+            android:id="@+id/buttonExpenseTime"/>
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/editTextExpenseDate"
+            app:layout_constraintTop_toBottomOf="@id/buttonExpenseDate"
             android:id="@+id/editTextExpenseNote"
             android:hint="Note" />
 
@@ -75,6 +72,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             android:text="SAVE"
             android:id="@+id/buttonSaveExpense"/>
+
 
 
 

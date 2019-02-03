@@ -1,5 +1,7 @@
 package com.example.android.mywallet2.view.records;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
@@ -12,17 +14,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TimePicker;
 
 import com.example.android.mywallet2.R;
 import com.example.android.mywallet2.model.Category;
+import com.example.android.mywallet2.model.Date;
 import com.example.android.mywallet2.model.record.ExpenseRecord;
 import com.example.android.mywallet2.model.record.Record;
 import com.example.android.mywallet2.viewmodel.CategoriesViewModel;
 import com.example.android.mywallet2.viewmodel.RecordViewModel;
 
-import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
 
 public class ExpenseFragment extends Fragment {
@@ -30,9 +35,17 @@ public class ExpenseFragment extends Fragment {
     private Button btnSaveExpense;
     private EditText editTextAmount, editTextPayee, editTextDate, editTextTime, editTextNote;
     private Spinner spinnerExpenseCategory;
+    private Button btnExpenseDate;
+    private Button btnExpenseTime;
+
+    private com.example.android.mywallet2.model.Date date;
 
     private List<Category> categoriesList;
     private CategoriesViewModel viewModel;
+
+    private Calendar calendar;
+    private DatePickerDialog datePickerDialog;
+    private TimePickerDialog timePickerDialog;
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -74,15 +87,73 @@ public class ExpenseFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_expense, container, false);
 
+        populateSpinner();
+
         editTextAmount = rootView.findViewById(R.id.editTextExpenseAmount);
         spinnerExpenseCategory = rootView.findViewById(R.id.spinnerExpenseCategory);
         editTextPayee = rootView.findViewById(R.id.editTextExpensePayee);
-        editTextDate = rootView.findViewById(R.id.editTextExpenseDate);
-        editTextTime = rootView.findViewById(R.id.editTextExpenseTime);
         editTextNote = rootView.findViewById(R.id.editTextExpenseNote);
         btnSaveExpense = rootView.findViewById(R.id.buttonSaveExpense);
+        btnExpenseDate = rootView.findViewById(R.id.buttonExpenseDate);
+        btnExpenseTime = rootView.findViewById(R.id.buttonExpenseTime);
 
-        populateSpinner();
+        //get current date
+        calendar = Calendar.getInstance();
+        final int day = calendar.get(Calendar.DAY_OF_MONTH);
+        final int month = calendar.get(Calendar.MONTH);
+        final int year = calendar.get(Calendar.YEAR);
+
+        btnExpenseDate.setText(day + "/" + (month+1) + "/" + year);
+
+        //get current time
+        java.util.Date time = new java.util.Date();
+        long second = time.getTime() / 1000;
+        long hours = second / 3600;
+        long minute = (time.getTime() - hours*3600000) / 60000;
+        long hour = hours - 430318;
+        final int intSecond = (int) second;
+        final int intHour = (int) hour;
+        final int intMinute = (int) minute;
+
+        //set date as current date and time
+        date = new Date(intSecond, intMinute, intHour, day, month, year);
+
+        String str = String.format("%02d:%02d", hour, minute);
+        btnExpenseTime.setText(str);
+
+
+        btnExpenseTime.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
+               timePickerDialog = new TimePickerDialog(getContext(), new TimePickerDialog.OnTimeSetListener() {
+                   @Override
+                   public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                       String str = String.format("%02d:%02d", selectedHour, selectedMinute);
+                       btnExpenseTime.setText(str);
+                       date.setHour(selectedHour);
+                       date.setMinute(selectedMinute);
+                   }
+               }, intHour, intMinute, true);
+               timePickerDialog.show();
+           }
+       });
+
+        btnExpenseDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                datePickerDialog = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int selectedYear, int selectedMonth, int selectedDay) {
+                        btnExpenseDate.setText(selectedDay + "/" + (selectedMonth+1) + "/" + selectedYear);
+                        date.setYear(selectedYear);
+                        date.setMonth(selectedMonth);
+                        date.setDay(selectedDay);
+                    }
+                    }, year, month, day);
+                datePickerDialog.show();
+            }
+        });
+
 
         btnSaveExpense.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,20 +170,19 @@ public class ExpenseFragment extends Fragment {
     private Record createNewRecord(){
         double amount = Double.valueOf(editTextAmount.getText().toString());
         String payee = editTextPayee.getText().toString();
-        String date = editTextDate.getText().toString();
-        String time = editTextTime.getText().toString();
         String note = editTextNote.getText().toString();
+
 
         String selectedCategory = spinnerExpenseCategory.getSelectedItem().toString();
         Category category = new Category(null, selectedCategory);
 
-
-        Record record = new ExpenseRecord(amount, null, note, new Date(date), payee, category);
+        Record record = new ExpenseRecord(amount, null, note, date, payee, category);
         return record;
     }
 
     private void populateSpinner() {
         viewModel = ViewModelProviders.of(this).get(CategoriesViewModel.class);
+
         viewModel.getCategories().observe(this, new Observer<List<Category>>() {
             @Override
             public void onChanged(@Nullable List<Category> categories) {

@@ -3,12 +3,67 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".view.records.IncomeFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="income" />
+        android:layout_height="match_parent">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:hint="Enter amount"
+            android:inputType="numberDecimal"
+            android:id="@+id/editTextIncomeAmount"/>
+
+
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editTextIncomeAmount"
+            android:id="@+id/editTextIncomeSource"
+            android:hint="Payee" />
+
+
+        <Button
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editTextIncomeSource"
+            android:text="Date"
+            android:id="@+id/buttonIncomeDate"/>
+
+
+        <Button
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toRightOf="@id/buttonIncomeDate"
+            app:layout_constraintTop_toBottomOf="@id/editTextIncomeSource"
+            android:text="Time"
+            android:id="@+id/buttonIncomeTime"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/buttonIncomeDate"
+            android:id="@+id/editTextIncomeNote"
+            android:hint="Note" />
+
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/editTextIncomeNote"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:text="SAVE"
+            android:id="@+id/buttonSaveIncome"/>
+
+    </android.support.constraint.ConstraintLayout>
 
 </FrameLayout>

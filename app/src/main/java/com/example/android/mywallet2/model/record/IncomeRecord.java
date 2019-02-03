@@ -1,6 +1,6 @@
 package com.example.android.mywallet2.model.record;
 
-import java.util.Date;
+import com.example.android.mywallet2.model.Date;
 
 public class IncomeRecord extends Record {
 

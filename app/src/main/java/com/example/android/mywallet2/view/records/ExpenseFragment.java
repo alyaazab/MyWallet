@@ -38,7 +38,8 @@ public class ExpenseFragment extends Fragment {
     private Button btnExpenseDate;
     private Button btnExpenseTime;
 
-    private com.example.android.mywallet2.model.Date date;
+    Date date;
+
 
     private List<Category> categoriesList;
     private CategoriesViewModel viewModel;
@@ -88,15 +89,22 @@ public class ExpenseFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_expense, container, false);
 
         populateSpinner();
+        findViews(rootView);
+        getDate();
 
-        editTextAmount = rootView.findViewById(R.id.editTextExpenseAmount);
-        spinnerExpenseCategory = rootView.findViewById(R.id.spinnerExpenseCategory);
-        editTextPayee = rootView.findViewById(R.id.editTextExpensePayee);
-        editTextNote = rootView.findViewById(R.id.editTextExpenseNote);
-        btnSaveExpense = rootView.findViewById(R.id.buttonSaveExpense);
-        btnExpenseDate = rootView.findViewById(R.id.buttonExpenseDate);
-        btnExpenseTime = rootView.findViewById(R.id.buttonExpenseTime);
+        btnSaveExpense.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Record record = createNewRecord();
+                RecordViewModel recordViewModel = new RecordViewModel();
+                recordViewModel.addNewRecord(record);
+            }
+        });
 
+        return rootView;
+    }
+
+    private void getDate() {
         //get current date
         calendar = Calendar.getInstance();
         final int day = calendar.get(Calendar.DAY_OF_MONTH);
@@ -118,25 +126,26 @@ public class ExpenseFragment extends Fragment {
         //set date as current date and time
         date = new Date(intSecond, intMinute, intHour, day, month, year);
 
+        //display current time
         String str = String.format("%02d:%02d", hour, minute);
         btnExpenseTime.setText(str);
 
 
         btnExpenseTime.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View view) {
-               timePickerDialog = new TimePickerDialog(getContext(), new TimePickerDialog.OnTimeSetListener() {
-                   @Override
-                   public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                       String str = String.format("%02d:%02d", selectedHour, selectedMinute);
-                       btnExpenseTime.setText(str);
-                       date.setHour(selectedHour);
-                       date.setMinute(selectedMinute);
-                   }
-               }, intHour, intMinute, true);
-               timePickerDialog.show();
-           }
-       });
+            @Override
+            public void onClick(View view) {
+                timePickerDialog = new TimePickerDialog(getContext(), new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                        String str = String.format("%02d:%02d", selectedHour, selectedMinute);
+                        btnExpenseTime.setText(str);
+                        date.setHour(selectedHour);
+                        date.setMinute(selectedMinute);
+                    }
+                }, intHour, intMinute, true);
+                timePickerDialog.show();
+            }
+        });
 
         btnExpenseDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -149,22 +158,21 @@ public class ExpenseFragment extends Fragment {
                         date.setMonth(selectedMonth);
                         date.setDay(selectedDay);
                     }
-                    }, year, month, day);
+                }, year, month, day);
                 datePickerDialog.show();
             }
         });
 
+    }
 
-        btnSaveExpense.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Record record = createNewRecord();
-                RecordViewModel recordViewModel = new RecordViewModel();
-                recordViewModel.addNewRecord(record);
-            }
-        });
-
-        return rootView;
+    private void findViews(View rootView) {
+        editTextAmount = rootView.findViewById(R.id.editTextExpenseAmount);
+        spinnerExpenseCategory = rootView.findViewById(R.id.spinnerExpenseCategory);
+        editTextPayee = rootView.findViewById(R.id.editTextExpensePayee);
+        editTextNote = rootView.findViewById(R.id.editTextExpenseNote);
+        btnSaveExpense = rootView.findViewById(R.id.buttonSaveExpense);
+        btnExpenseDate = rootView.findViewById(R.id.buttonExpenseDate);
+        btnExpenseTime = rootView.findViewById(R.id.buttonExpenseTime);
     }
 
     private Record createNewRecord(){
@@ -198,8 +206,6 @@ public class ExpenseFragment extends Fragment {
                 spinnerExpenseCategory.setAdapter(adapter);
             }
         });
-
-
     }
 
 

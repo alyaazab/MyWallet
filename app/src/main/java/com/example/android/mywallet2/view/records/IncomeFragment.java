@@ -35,8 +35,7 @@ public class IncomeFragment extends Fragment {
 
 
     private Button btnSaveIncome;
-    private EditText editTextAmount, editTextDate, editTextTime, editTextNote,
-            editTextSourceOfPayment;
+    private EditText editTextAmount, editTextNote, editTextSourceOfPayment;
     private Button btnIncomeDate;
     private Button btnIncomeTime;
 

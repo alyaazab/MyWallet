@@ -1,5 +1,6 @@
 package com.example.android.mywallet2.view;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,6 +15,7 @@ import android.view.ViewGroup;
 
 import com.example.android.mywallet2.R;
 import com.example.android.mywallet2.view.records.RecordActivity;
+import com.example.android.mywallet2.viewmodel.HomeViewModel;
 import com.example.android.mywallet2.viewmodel.RecordViewModel;
 
 public class HomeFragment extends Fragment {
@@ -21,13 +23,13 @@ public class HomeFragment extends Fragment {
     private RecordViewModel recordViewModel;
     private FloatingActionButton buttonAddRecord;
 
+    private HomeViewModel homeViewModel;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
-
         buttonAddRecord = rootView.findViewById(R.id.buttonAddRecord);
-
         buttonAddRecord.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -37,6 +39,16 @@ public class HomeFragment extends Fragment {
                 }
             }
         );
+
+        homeViewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
+
+
+
+
+
+
+
+
 
         return rootView;
     }

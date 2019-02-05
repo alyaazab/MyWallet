@@ -8,6 +8,10 @@ public class ExpenseRecord extends Record {
     private String payee;
     private Category category;
 
+    public ExpenseRecord(){
+
+    }
+
     public ExpenseRecord(double amount, String image, String note, Date date, String payee, Category category){
         super(amount, image, note, date);
         this.payee = payee;

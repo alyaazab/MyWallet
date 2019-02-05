@@ -29,6 +29,7 @@ public class CategoriesDataManager {
 
 
     public LiveData<List<Category>> getCategoriesFromDatabase() {
+
         mDatabaseCategories.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

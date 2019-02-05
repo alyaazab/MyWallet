@@ -9,6 +9,10 @@ public class Date {
     private int month;
     private int year;
 
+    public Date(){
+
+    }
+
     public Date(int second, int minute, int hour, int day, int month, int year) {
         this.second = second;
         this.minute = minute;

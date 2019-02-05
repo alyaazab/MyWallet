@@ -9,6 +9,10 @@ public abstract class Record {
     private String note;
     private Date date;
 
+    public Record(){
+
+    }
+
     public Record(double amount, String image, String note, Date date) {
         this.amount = amount;
         this.image = image;

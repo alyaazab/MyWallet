@@ -112,7 +112,8 @@ public class ExpenseFragment extends Fragment {
 
         //get current time
         java.util.Date time = new java.util.Date();
-        long second = time.getTime() / 1000;
+        long milliseconds = time.getTime();
+        long second = milliseconds / 1000;
         long hours = second / 3600;
         long minute = (time.getTime() - hours*3600000) / 60000;
         long hour = hours - 430318;
@@ -121,7 +122,7 @@ public class ExpenseFragment extends Fragment {
         final int intMinute = (int) minute;
 
         //set date as current date and time
-        date = new Date(intSecond, intMinute, intHour, day, month, year);
+        date = new Date(milliseconds, intSecond, intMinute, intHour, day, month, year);
 
         //display current time
         String str = String.format("%02d:%02d", hour, minute);

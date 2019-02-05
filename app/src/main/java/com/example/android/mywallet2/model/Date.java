@@ -1,7 +1,11 @@
 package com.example.android.mywallet2.model;
 
+
+import java.security.Timestamp;
+
 public class Date {
 
+    private long milliseconds;
     private int second;
     private int minute;
     private int hour;
@@ -13,13 +17,24 @@ public class Date {
 
     }
 
-    public Date(int second, int minute, int hour, int day, int month, int year) {
+
+    public Date(long milliseconds, int second, int minute, int hour, int day, int month, int year) {
+        this.milliseconds = milliseconds;
         this.second = second;
         this.minute = minute;
         this.hour = hour;
         this.day = day;
         this.month = month;
         this.year = year;
+    }
+
+
+    public void setMilliseconds(long milliseconds) {
+        this.milliseconds = milliseconds;
+    }
+
+    public long getMilliseconds() {
+        return milliseconds;
     }
 
     public void setSecond(int second) {

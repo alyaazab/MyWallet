@@ -9,23 +9,14 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.TextView;
 
 import com.example.android.mywallet2.R;
-import com.example.android.mywallet2.viewmodel.RecordViewModel;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 public class ProfileActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout drawerLayout;
-    private FirebaseAuth firebaseAuth;
-    private TextView textViewEmail;
-    private RecordViewModel recordViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,16 +47,6 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
                 navigationView.setCheckedItem(R.id.nav_home);
         }
 
-
-
-//        firebaseAuth = FirebaseAuth.getInstance();
-//
-//        String email = firebaseAuth.getCurrentUser().getEmail();
-//        textViewEmail = findViewById(R.id.textViewEmail);
-//        textViewEmail.setText(email);
-//        recordViewModel = new RecordViewModel();
-
-
     }
 
     @Override
@@ -90,6 +71,12 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
             case R.id.nav_planned__payments:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new PlannedPaymentsFragment()).commit();
                 break;
+            case R.id.logout:
+                FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+                firebaseAuth.signOut();
+                finish();
+                startActivity(new Intent(this, MainActivity.class));
+                break;
         }
 
         //close the drawer
@@ -107,13 +94,4 @@ public class ProfileActivity extends AppCompatActivity implements NavigationView
         else
             super.onBackPressed();
     }
-
-//    public void logout(View view) {
-//        firebaseAuth.signOut();
-//        finish();
-//        startActivity(new Intent(this, MainActivity.class));
-//    }
-
-
-
 }

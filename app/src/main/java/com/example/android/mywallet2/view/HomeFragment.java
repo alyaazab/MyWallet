@@ -21,7 +21,9 @@ import com.example.android.mywallet2.view.records.RecordActivity;
 import com.example.android.mywallet2.viewmodel.HomeViewModel;
 import com.example.android.mywallet2.viewmodel.RecordViewModel;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class HomeFragment extends Fragment {
@@ -46,7 +48,6 @@ public class HomeFragment extends Fragment {
             public void onClick(View view) {
                     Log.e("Activity", "RECORD");
                     startActivity(new Intent(getContext(), RecordActivity.class));
-
                 }
             }
         );
@@ -60,20 +61,10 @@ public class HomeFragment extends Fragment {
                 for(int i=0; i<records.size(); i++)
                 {
                     Record currentRecord = records.get(i);
-
                     recordsTextView.setText(recordsTextView.getText() + currentRecord.toString());
                 }
             }
         });
-
-
-
-
-
-
-
-
-
         return rootView;
     }
 

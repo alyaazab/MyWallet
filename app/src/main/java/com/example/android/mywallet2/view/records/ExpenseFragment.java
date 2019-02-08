@@ -169,7 +169,7 @@ public class ExpenseFragment extends Fragment {
                             e.printStackTrace();
                         }
                     }
-                }, hour, minute, true);
+                }, hour, minute, false);
                 timePickerDialog.show();
             }
         });

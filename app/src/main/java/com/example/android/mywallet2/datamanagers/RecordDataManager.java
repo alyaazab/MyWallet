@@ -19,7 +19,7 @@ public class RecordDataManager {
 
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         databaseReference = FirebaseDatabase.getInstance().getReference();
-        databaseReference.child("users").child(firebaseUser.getUid()).child("Information").setValue(information);
+        databaseReference.child("users").child(firebaseUser.getUid()).child("information").setValue(information);
 
     }
 }

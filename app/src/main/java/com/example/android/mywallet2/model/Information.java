@@ -13,10 +13,12 @@ public class Information {
         return ourInstance;
     }
 
+    private ArrayList<Record> recordList = new ArrayList<>();
+
     private Information() {
     }
-
     // TODO: another objects here (record...etc)
+
 
     public void setRecordList(ArrayList<Record> recordList) {
         this.recordList = recordList;
@@ -25,8 +27,6 @@ public class Information {
     public ArrayList<Record> getRecordList() {
         return recordList;
     }
-
-    private ArrayList<Record> recordList = new ArrayList<>();
 
     public Information(ArrayList<Record> recordList) {
         this.recordList = recordList;

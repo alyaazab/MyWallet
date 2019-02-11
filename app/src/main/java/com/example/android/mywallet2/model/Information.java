@@ -5,31 +5,26 @@ import android.icu.text.IDNA;
 import com.example.android.mywallet2.model.record.Record;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Information {
     private static final Information ourInstance = new Information();
+    private List<Record> recordList;
 
     public static Information getInstance() {
         return ourInstance;
     }
 
-    private ArrayList<Record> recordList = new ArrayList<>();
-
     private Information() {
     }
     // TODO: another objects here (record...etc)
 
-
-    public void setRecordList(ArrayList<Record> recordList) {
+    public void setRecordList(List<Record> recordList) {
         this.recordList = recordList;
     }
 
-    public ArrayList<Record> getRecordList() {
+    public List<Record> getRecordList() {
         return recordList;
-    }
-
-    public Information(ArrayList<Record> recordList) {
-        this.recordList = recordList;
     }
 
     public void addRecordToList(Record record) {

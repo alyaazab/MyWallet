@@ -16,13 +16,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.android.mywallet2.R;
+import com.example.android.mywallet2.model.Information;
+import com.example.android.mywallet2.model.User;
 import com.example.android.mywallet2.model.record.Record;
 import com.example.android.mywallet2.view.records.RecordActivity;
 import com.example.android.mywallet2.viewmodel.RecordViewModel;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class HomeFragment extends Fragment {
@@ -38,7 +37,6 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
         recordsTextView = rootView.findViewById(R.id.recordsTextView);
-
 
         buttonAddRecord = rootView.findViewById(R.id.buttonAddRecord);
         buttonAddRecord.setOnClickListener(new View.OnClickListener() {
@@ -63,6 +61,17 @@ public class HomeFragment extends Fragment {
         });
 
 
+        User user = User.getInstance();
+        Log.e("user", user==null ? "null" : "not null");
+
+//        Information information = user.getInformation();
+        Information information = Information.getInstance();
+        Log.e("info", information==null ? "null" : "not null");
+
+        List<Record> recordList = information.getRecordList();
+        Log.e("record list", recordList==null ? "null" : "not null");
+
+        recordsTextView.setText(recordList.toString());
 
         return rootView;
     }

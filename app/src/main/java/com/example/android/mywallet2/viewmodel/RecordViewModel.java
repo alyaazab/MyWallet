@@ -5,8 +5,11 @@ import android.arch.lifecycle.MediatorLiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModel;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.example.android.mywallet2.datamanagers.RecordDataManager;
+import com.example.android.mywallet2.model.Information;
+import com.example.android.mywallet2.model.User;
 import com.example.android.mywallet2.model.record.Record;
 
 import java.util.List;
@@ -15,6 +18,7 @@ public class RecordViewModel extends ViewModel {
 
     private RecordDataManager recordDataManager;
     MediatorLiveData<List<Record>> mediatorLiveData;
+    User user;
 
 
     public RecordViewModel() {
@@ -22,12 +26,26 @@ public class RecordViewModel extends ViewModel {
     }
 
     public LiveData<List<Record>> getRecords(){
-        final RecordDataManager recordDataManager = new RecordDataManager();
+        recordDataManager = new RecordDataManager();
 
         mediatorLiveData.addSource(recordDataManager.getRecordsFromDatabase(), new Observer<List<Record>>() {
             @Override
             public void onChanged(@Nullable List<Record> records) {
                 mediatorLiveData.setValue(records);
+                Information information = Information.getInstance();
+                information.setRecordList(records);
+                user = User.getInstance();
+                user.setInformation(information);
+
+//                User myuser = User.getInstance();
+//                Log.e("user", myuser==null ? "null" : "not null");
+//
+////              Information information = user.getInformation();
+//                Information info = Information.getInstance();
+//                Log.e("info", info==null ? "null" : "not null");
+//
+//                List<Record> rec = info.getRecordList();
+//                Log.e("record list", rec==null ? "null" : "not null");
             }
         });
 

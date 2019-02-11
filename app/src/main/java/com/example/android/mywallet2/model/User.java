@@ -2,6 +2,9 @@ package com.example.android.mywallet2.model;
 
 public class User {
     private static final User ourInstance = new User();
+    private String firstName, lastName, email, password;
+    private Information information;
+
 
     public static User getInstance() {
         return ourInstance;
@@ -9,11 +12,6 @@ public class User {
 
     private User() {
     }
-
-    private String firstName, lastName, email, password;
-    private Information information;
-
-    // TODO: list of Records here and its getter. (maybe also a method to add into the list, idk.)
 
     public String getFirstName() {
         return firstName;

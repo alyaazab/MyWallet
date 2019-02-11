@@ -13,7 +13,6 @@ import android.widget.Toast;
 
 import com.example.android.mywallet2.R;
 import com.example.android.mywallet2.model.User;
-import com.example.android.mywallet2.viewmodel.UserViewModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -40,8 +39,8 @@ public class MainActivity extends AppCompatActivity {
         if (firebaseAuth.getCurrentUser() != null) {
             //start profile activity
             finish();
-            UserViewModel userViewModel = new UserViewModel();
-            userViewModel.initializeUser();
+//            UserViewModel userViewModel = new UserViewModel();
+//            userViewModel.initializeUser();
             startActivity(new Intent(this, ProfileActivity.class));
         }
     }

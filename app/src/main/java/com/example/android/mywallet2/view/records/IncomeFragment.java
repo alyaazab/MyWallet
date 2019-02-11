@@ -28,8 +28,11 @@ import com.example.android.mywallet2.model.record.Record;
 import com.example.android.mywallet2.viewmodel.CategoriesViewModel;
 import com.example.android.mywallet2.viewmodel.RecordViewModel;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
+import java.util.TimeZone;
 
 public class IncomeFragment extends Fragment {
 
@@ -98,6 +101,7 @@ public class IncomeFragment extends Fragment {
     }
 
 
+
     private void getDate() {
         //get current date
         calendar = Calendar.getInstance();
@@ -105,25 +109,22 @@ public class IncomeFragment extends Fragment {
         final int month = calendar.get(Calendar.MONTH);
         final int year = calendar.get(Calendar.YEAR);
 
-        btnIncomeDate.setText(day + "/" + (month+1) + "/" + year);
+        //display current date on date button
+        String dateString = String.format("%02d/%02d/%04d", day, month+1, year);
+        btnIncomeDate.setText(dateString);
 
         //get current time
-        java.util.Date time = new java.util.Date();
-        long milliseconds = time.getTime();
-        long second = milliseconds / 1000;
-        long hours = second / 3600;
-        long minute = (time.getTime() - hours*3600000) / 60000;
-        long hour = hours - 430318;
-        final int intSecond = (int) second;
-        final int intHour = (int) hour;
-        final int intMinute = (int) minute;
+        long milliseconds = calendar.getTimeInMillis();
+        final int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        final int minute = calendar.get(Calendar.MINUTE);
+        int second = calendar.get(Calendar.SECOND);
 
-        //set date as current date and time
-        date = new Date(milliseconds, intSecond, intMinute, intHour, day, month, year);
+        //display current time on time button
+        String timeString = String.format("%02d:%02d", hour, minute);
+        btnIncomeTime.setText(timeString);
 
-        //display current time
-        String str = String.format("%02d:%02d", hour, minute);
-        btnIncomeTime.setText(str);
+        //create a Date object using the current date
+        date = new Date(milliseconds, second, minute, hour, day, month, year);
 
 
         btnIncomeTime.setOnClickListener(new View.OnClickListener() {
@@ -132,12 +133,40 @@ public class IncomeFragment extends Fragment {
                 timePickerDialog = new TimePickerDialog(getContext(), new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                        //display selected time on button
                         String str = String.format("%02d:%02d", selectedHour, selectedMinute);
                         btnIncomeTime.setText(str);
+
+                        //change the "time" values in our date object to the selected time
                         date.setHour(selectedHour);
                         date.setMinute(selectedMinute);
+                        date.setSecond(0);
+
+
+                        try {
+                            //create a SimpleDateFormat object to specify which date format we're using
+                            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+
+                            //set the current time zone as the device's timezone
+                            dateFormat.setTimeZone(TimeZone.getDefault());
+
+                            //form a string using our date&time variables in the same format
+                            // as our SimpleDateFormat object (dd/MM/yyyy HH:mm:ss)
+                            String selectedDate = date.getDay() + "/" + date.getMonth()+1 + "/" +
+                                    date.getYear() + " " + date.getHour() + ":" + date.getMinute()
+                                    + ":" + date.getSecond();
+
+
+                            //getTime() gives us the time elapsed from 1970 until the selectedDate
+                            long milliseconds = dateFormat.parse(selectedDate).getTime();
+
+                            //set the milliseconds (timestamp) in our Date object
+                            date.setMilliseconds(milliseconds);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
                     }
-                }, intHour, intMinute, true);
+                }, hour, minute, false);
                 timePickerDialog.show();
             }
         });
@@ -148,7 +177,11 @@ public class IncomeFragment extends Fragment {
                 datePickerDialog = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int selectedYear, int selectedMonth, int selectedDay) {
+
+                        //display the selected date on the date button
                         btnIncomeDate.setText(selectedDay + "/" + (selectedMonth+1) + "/" + selectedYear);
+
+                        //set the year, month and day of our Date object as the selected year, month and day
                         date.setYear(selectedYear);
                         date.setMonth(selectedMonth);
                         date.setDay(selectedDay);

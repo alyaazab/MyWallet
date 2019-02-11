@@ -15,19 +15,19 @@ import com.google.firebase.database.ValueEventListener;
 
 public class UserDataManager {
     public void readUserFromDatabase() {
-        FirebaseUser fbUser = FirebaseAuth.getInstance().getCurrentUser();
-        final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference()
-                .child("users").child(fbUser.getUid());
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                User user = dataSnapshot.getValue(User.class);
-                Log.d("USER", user.getInformation() == null ? "NULL" : "NOT NULL");
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
+//        FirebaseUser fbUser = FirebaseAuth.getInstance().getCurrentUser();
+//        final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference()
+//                .child("users").child(fbUser.getUid());
+//        databaseReference.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                User user = dataSnapshot.getValue(User.class);
+//                Log.d("USER", user.getInformation() == null ? "NULL" : "NOT NULL");
+//            }
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        });
     }
 }

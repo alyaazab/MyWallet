@@ -18,7 +18,6 @@ import android.widget.TextView;
 import com.example.android.mywallet2.R;
 import com.example.android.mywallet2.model.record.Record;
 import com.example.android.mywallet2.view.records.RecordActivity;
-import com.example.android.mywallet2.viewmodel.HomeViewModel;
 import com.example.android.mywallet2.viewmodel.RecordViewModel;
 
 import java.text.SimpleDateFormat;
@@ -31,7 +30,6 @@ public class HomeFragment extends Fragment {
     private RecordViewModel recordViewModel;
     private FloatingActionButton buttonAddRecord;
 
-    private HomeViewModel homeViewModel;
     private TextView recordsTextView;
 
 
@@ -52,12 +50,10 @@ public class HomeFragment extends Fragment {
             }
         );
 
-        homeViewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
-        homeViewModel.getRecords().observe(this, new Observer<List<Record>>() {
+        recordViewModel = ViewModelProviders.of(this).get(RecordViewModel.class);
+        recordViewModel.getRecords().observe(this, new Observer<List<Record>>() {
             @Override
             public void onChanged(@Nullable List<Record> records) {
-
-
                 for(int i=0; i<records.size(); i++)
                 {
                     Record currentRecord = records.get(i);

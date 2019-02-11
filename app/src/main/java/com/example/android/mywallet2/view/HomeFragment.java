@@ -31,6 +31,9 @@ public class HomeFragment extends Fragment {
 
     private TextView recordsTextView;
 
+    private User user;
+    private Information information;
+
 
     @Nullable
     @Override
@@ -57,22 +60,23 @@ public class HomeFragment extends Fragment {
                     Record currentRecord = records.get(i);
                     recordsTextView.setText(recordsTextView.getText() + currentRecord.toString());
                 }
-            }
-        });
+                information = Information.getInstance();
+                information.setRecordList(records);
+                user = User.getInstance();
+                user.setInformation(information);
 
-
-        User user = User.getInstance();
-        Log.e("user", user==null ? "null" : "not null");
+                Log.e("userrrr", user==null ? "null" : "not null");
 
 //        Information information = user.getInformation();
-        Information information = Information.getInstance();
-        Log.e("info", information==null ? "null" : "not null");
+                Log.e("infoooo", information==null ? "null" : "not null");
 
-        List<Record> recordList = information.getRecordList();
-        Log.e("record list", recordList==null ? "null" : "not null");
+                List<Record> recordList = information.getRecordList();
+                Log.e("record_list", recordList==null ? "null" : "not null");
 
-        recordsTextView.setText(recordList.toString());
+                recordsTextView.setText(recordList.toString());
 
+            }
+        });
         return rootView;
     }
 

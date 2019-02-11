@@ -32,11 +32,11 @@ public class RecordViewModel extends ViewModel {
             @Override
             public void onChanged(@Nullable List<Record> records) {
                 mediatorLiveData.setValue(records);
-                Information information = Information.getInstance();
+                /*Information information = Information.getInstance();
                 information.setRecordList(records);
                 user = User.getInstance();
                 user.setInformation(information);
-
+*/
 //                User myuser = User.getInstance();
 //                Log.e("user", myuser==null ? "null" : "not null");
 //

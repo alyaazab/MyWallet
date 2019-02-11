@@ -46,7 +46,7 @@ public class RecordDataManager {
 
     public LiveData<List<Record>> getRecordsFromDatabase(){
         databaseReference = FirebaseDatabase.getInstance().getReference().child("users").
-                child(firebaseUser.getUid()).child("Information").child("recordList");
+                child(firebaseUser.getUid()).child("information").child("recordList");
 
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override

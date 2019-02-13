@@ -56,6 +56,7 @@ public class HomeFragment extends Fragment {
                 {
                     Record currentRecord = records.get(i);
                     recordsTextView.setText(recordsTextView.getText() + currentRecord.toString());
+                    Log.d("RECORD_LIST", currentRecord.getNote());
                 }
             }
         });

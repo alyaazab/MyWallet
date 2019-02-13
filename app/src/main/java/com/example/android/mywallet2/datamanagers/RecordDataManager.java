@@ -48,7 +48,7 @@ public class RecordDataManager {
         databaseReference = FirebaseDatabase.getInstance().getReference().child("users").
                 child(firebaseUser.getUid()).child("information").child("recordList");
 
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        databaseReference.orderByChild("data/milliseconds").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 tempList.clear();

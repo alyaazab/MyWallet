@@ -36,8 +36,6 @@ public class RecordViewModel extends ViewModel {
                 information.setRecordList(records);
                 user = User.getInstance();
                 user.setInformation(information);
-
-
             }
         });
 

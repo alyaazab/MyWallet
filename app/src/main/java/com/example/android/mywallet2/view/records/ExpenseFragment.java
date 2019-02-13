@@ -23,6 +23,7 @@ import android.widget.TimePicker;
 import com.example.android.mywallet2.R;
 import com.example.android.mywallet2.model.Category;
 import com.example.android.mywallet2.model.Date;
+import com.example.android.mywallet2.model.Information;
 import com.example.android.mywallet2.model.record.ExpenseRecord;
 import com.example.android.mywallet2.model.record.Record;
 import com.example.android.mywallet2.viewmodel.CategoriesViewModel;
@@ -101,6 +102,14 @@ public class ExpenseFragment extends Fragment {
                 recordViewModel.addNewRecord(record);
             }
         });
+
+
+        Information information = Information.getInstance();
+        Log.e("information", information.toString());
+
+        List<Record> recordList = information.getRecordList();
+        Log.e("recordlistexpense", recordList==null ? "null" : "not null");
+
 
         return rootView;
     }

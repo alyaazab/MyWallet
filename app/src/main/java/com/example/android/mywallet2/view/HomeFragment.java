@@ -36,7 +36,6 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
-        recordsTextView = rootView.findViewById(R.id.recordsTextView);
 
         buttonAddRecord = rootView.findViewById(R.id.buttonAddRecord);
         buttonAddRecord.setOnClickListener(new View.OnClickListener() {
@@ -55,11 +54,21 @@ public class HomeFragment extends Fragment {
                 for(int i=0; i<records.size(); i++)
                 {
                     Record currentRecord = records.get(i);
-                    recordsTextView.setText(recordsTextView.getText() + currentRecord.toString());
                     Log.d("RECORD_LIST", currentRecord.getNote());
                 }
             }
         });
+
+
+        User u = User.getInstance();
+        Log.e("user", u==null ? "null" : "not null");
+
+
+        Information information = Information.getInstance();
+        Log.e("info", information.toString());
+
+        List<Record> recordList = information.getRecordList();
+        Log.e("recordlist", recordList==null ? "null" : "not null");
 
 
         return rootView;
